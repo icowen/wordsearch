@@ -18,21 +18,9 @@ public class Main
          * String[] words holds the words that are search for.
          * This is where you can change which board is being solved.
          */
-        //WordsearchGenerator test = new WordsearchGenerator();
-        //char[][] grid = test.getBoard();
-        //String[] words = test.getWords();
-
-        char[][] grid = new char[][](5);
-        String[] words = new String[]("ian");
-
-
-        for(int i = 0; i<5; i++) {
-          for(int j = 0; j<5, j++) {
-            grid[i][j] = 'a';
-          }
-        }
-        grid[0][0] = 'i';
-        grid[0][2] = 'n';
+        WordsearchGenerator test = new WordsearchGenerator();
+        char[][] grid = test.getBoard();
+        String[] words = test.getWords();
 
         //Solves wordsearch
         Solver solver = new Solver(grid, words);
