@@ -1,11 +1,19 @@
 package wordsearch;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 
-public class WordsearchGenerator{
+public class inputTest{
 
   /**Datafield declarations.*/
   private static int width;
@@ -13,27 +21,12 @@ public class WordsearchGenerator{
   private static int wordCount;
   private static  ArrayList<String> words;
   private static  int[] positions;
-  static char [][] search;
+  private static char [][] search;
   private  static String input;
   /**Int counter to count the errors. */
   private static int  errorcount= 0;
-
-  public WordsearchGenerator() {
-    run();
-  }
-
-  public static char[][] getBoard() {
-    return search;
-  }
-
-  public static String[] getWords() {
-    String[] wordArr = new String[words.size()];
-    for(int i = 0; i < wordArr.length; i++) {
-      wordArr[i] = words.get(i);
-      System.out.println(wordArr[i]);
-    }
-    return wordArr;
-  }
+  private static String File;
+  private static String nameOfFile;
 
   public static void printVertical(){
 	    for(int i =0; i <width; i++){
@@ -50,6 +43,20 @@ public class WordsearchGenerator{
 	      System.out.println(words.get(i));
 	    }
 	  }
+
+
+      public static char[][] getBoard() {
+        return search;
+      }
+
+      public static String[] getWords() {
+        String[] wordArr = new String[words.size()];
+        for(int i = 0; i < wordArr.length; i++) {
+          wordArr[i] = words.get(i);
+        }
+        return wordArr;
+      }
+      
 	  /*
 	  * @param void;
 	  * @return void;
@@ -68,7 +75,7 @@ public class WordsearchGenerator{
 	  *Fills up the search array, applies the inputted words,
 	  * and randomly generates the rest of the characters.
 	  */
-	  public static char[][] fill(){
+	  public static void fill(){
 	    int between,  strlen;
 	    int x, y ;
 	    positions = new int[wordCount];
@@ -95,7 +102,6 @@ public class WordsearchGenerator{
 	        }
 	      }
 	    }
-      return search;
 
 	  }//end method
 
@@ -130,22 +136,56 @@ public class WordsearchGenerator{
 	  * @return void;
 	  * Takes user input, processes it and places it in relevate datafields.
 	  */
-    public static void takeInput(){
-      Scanner scan = new Scanner(System.in);
-      wordCount =0;
-      words=  new ArrayList<String>();
-      System.out.println("What words do you want to look for? type each word on its own line." );
-      System.out.println("Enter 'end' when your list of words is complete.");
-      while (scan.hasNextLine()){
-        input = scan.next();
-        if(input.equals("end")){
-          scan.close();
-          break;
-        }
-        wordCount++;
-        words.add(input);
-      }
-	  }//end method
+	  public static void takeInput(){
+	    Scanner scan = new Scanner(System.in);
+	    Scanner fileScanner = null;
+	    wordCount =0;
+	    words =  new ArrayList<String>();
+	    System.out.println("Would you like to type out your words (enter: word) or use a file (enter: file)?");
+	    input = scan.next();
+
+	    	if (input.equalsIgnoreCase("word")){
+
+	    		System.out.println("What words do you want to look for? type each word on its own line." );
+	    		System.out.println("Enter 'end' when your list of words is complete.");
+	    		while (scan.hasNextLine()){
+	    			input = scan.next();
+	    			if(input.equals("end")){
+	    				scan.close();
+	    				break;
+	    			}
+	    			wordCount++;
+	    			words.add(input);
+	    		}
+	    	}
+	    	else if(input.equalsIgnoreCase("file")){
+                System.out.println("Enter the path of the file you want to use.");
+                try {
+                    nameOfFile = scan.next();
+                    List<String> lines = Collections.emptyList();
+                    try {
+                        lines = Files.readAllLines(Paths.get(nameOfFile), StandardCharsets.UTF_8);
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                    words.addAll(lines);
+                    wordCount = words.size();
+                    System.out.println(words);
+                    System.out.println(wordCount);
+                }
+
+                catch(Exception e){
+                    System.out.println("File doesn't exist, please respecify file name");
+                }
+                }
+	    	else{
+	    		System.out.println("Thats not file or word please use word or file.");
+	    		takeInput();
+
+	    	}
+	    	}
+	  //end method
 
 	   /*
 	  * @param void;

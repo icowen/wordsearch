@@ -15,8 +15,10 @@ public class ImportWordsearch {
    * Constructor that sets filename, words, and letters for the board.
    * @param String is the name of the .txt file being imported.
    */
-  public ImportWordsearch(String filename) {
-    this.filename = filename;
+  public ImportWordsearch() {
+    Scanner scan = new Scanner(System.in);
+    System.out.println("Enter file path: ");
+    this.filename = scan.nextLine();
     setWords();
   }
 

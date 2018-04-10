@@ -18,19 +18,18 @@ public class Main
          * String[] words holds the words that are searched for.
          * This is where you can change which board is being solved.
          */
-        /*
-         *WordsearchGenerator test = new WordsearchGenerator();
-         *char[][] grid = test.getBoard();
-         *String[] words = test.getWords();
-         */
+         //WordsearchGenerator test = new WordsearchGenerator();
+         //char[][] grid = test.getBoard();
+         //String[] words = test.getWords();
+
 
         /* Uses a .txt file as input for wordsearch.
          * File contains lines of the board written on separate lines,
          * the word "end" to indicate the next lines are the words, and
          * the words entered on separate lines.
          */
-         String file = "C:\\Users\\ian_c\\java\\wordsearch\\wordsearch\\test.txt";
-         ImportWordsearch test = new ImportWordsearch(file);
+         //String file = "C:\\Users\\ian_c\\java\\wordsearch\\wordsearch\\toTheSun.txt";
+         ImportWordsearch test = new ImportWordsearch();
          char[][] grid = test.getLetters();
          String[] words = test.getWords();
 

@@ -24,9 +24,9 @@ public class Board{
     windowHeigth = board.length*40 + 200;
   }
 
- /*
-  * Method that displays wordsearch as a graphic.
-  */
+  /*
+   * Method that displays wordsearch as a graphic.
+   */
   public void showBoard() {
     BoardOutline BO = new BoardOutline(board, solutions);
 
