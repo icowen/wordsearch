@@ -1,6 +1,7 @@
 package wordsearch;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import javax.swing.JComponent;
 import java.util.*;
 
@@ -52,9 +53,72 @@ public class BoardOutline extends JComponent {
       int startY = solutions.get(key).getStartY()*40 + 80;
       int endX = solutions.get(key).getEndX()*40 + 90;
       int endY = solutions.get(key).getEndY()*40 + 80;
-      int width = endX - startX + 40;
-      int height = endY - startY + 30;
-      g2.drawRect(startX, startY, width, height);
+      int width = Math.abs(endX - startX + 30);
+      int height = Math.abs(endY - startY + 30);
+
+      if(startY == endY && startX > endX) {           //Word Going Left
+
+          g2.drawRect(endX, endY, width + 70, 30);
+
+      } else if(startX == endX && startY > endY) {    //Word Going Up
+
+          g2.drawRect(endX, endY, 30, height + 70);
+
+      } else if (startX == endX || startY == endY) {  //Word Going Right or Down
+
+          g2.drawRect(startX, startY, width, height);
+
+      } else {
+        /*
+         * Polygons are used for diagonal words because so you
+         * don't have to rotate rectangles.
+         */
+          int[] x = new int[4];     //Array of x-coordinates
+          int[] y = new int[4];     //Array of y-coordinates corresponding to x
+
+          if(startY < endY) {
+            if(startX < endX) {                       //Right-Down diagonal
+              x[0] = startX - 10;
+              y[0] = startY;
+              x[1] = startX + 30;
+              y[1] = startY;
+              x[2] = endX + 50;
+              y[2] = endY + 30;
+              x[3] = endX + 10;
+              y[3] = endY + 30;
+            } else {                                 //Left-Down diagonal
+              x[0] = startX;
+              y[0] = startY;
+              x[1] = startX + 40;
+              y[1] = startY;
+              x[2] = endX + 30;
+              y[2] = endY + 30;
+              x[3] = endX - 10;
+              y[3] = endY + 30;
+            }
+          } else {
+              if(startX < endX){                      //Right-Up diagonal
+                x[0] = endX;
+                y[0] = endY;
+                x[1] = endX + 40;
+                y[1] = endY;
+                x[2] = startX + 30;
+                y[2] = startY + 30;
+                x[3] = startX - 10;
+                y[3] = startY + 30;
+              } else {                                //Left-Up diagonal
+                x[0] = endX - 10;
+                y[0] = endY;
+                x[1] = endX + 30;
+                y[1] = endY;
+                x[2] = startX + 50;
+                y[2] = startY + 30;
+                x[3] = startX + 10;
+                y[3] = startY + 30;
+                }
+              }
+        g2.drawPolygon(x, y, 4);
+      }
     }
   }
 }

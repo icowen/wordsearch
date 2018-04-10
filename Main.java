@@ -15,24 +15,24 @@ public class Main
         /*
          * Uses a wordsearch generator as input.
          * char[][] grid is how you can enter your own wordsearch Board.
-         * String[] words holds the words that are search for.
+         * String[] words holds the words that are searched for.
          * This is where you can change which board is being solved.
          */
-        //WordsearchGenerator test = new WordsearchGenerator();
-        //char[][] grid = test.getBoard();
-        //String[] words = test.getWords();
+        /*
+         *WordsearchGenerator test = new WordsearchGenerator();
+         *char[][] grid = test.getBoard();
+         *String[] words = test.getWords();
+         */
 
-        char[][] grid = new char[][](5);
-        String[] words = new String[]("ian");
-
-
-        for(int i = 0; i<5; i++) {
-          for(int j = 0; j<5, j++) {
-            grid[i][j] = 'a';
-          }
-        }
-        grid[0][0] = 'i';
-        grid[0][2] = 'n';
+        /* Uses a .txt file as input for wordsearch.
+         * File contains lines of the board written on separate lines,
+         * the word "end" to indicate the next lines are the words, and
+         * the words entered on separate lines.
+         */
+         String file = "C:\\Users\\ian_c\\java\\wordsearch\\wordsearch\\test.txt";
+         ImportWordsearch test = new ImportWordsearch(file);
+         char[][] grid = test.getLetters();
+         String[] words = test.getWords();
 
         //Solves wordsearch
         Solver solver = new Solver(grid, words);
